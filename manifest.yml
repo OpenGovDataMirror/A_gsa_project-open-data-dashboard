@@ -1,0 +1,33 @@
+---
+# To apply this manifest: cf push --vars-file vars.yml
+default_config: &defaults
+  disk_quota: 512M
+  timeout: 180
+  services:
+    - ((app_name))-db       # cf create-service aws-rds small-mysql-redundant dashboard-db
+    - ((app_name))-s3       # cf create-service s3 basic-public dashboard-s3
+    - ((app_name))-secrets  # cf create-user-provided-service dashboard-secrets -p '{
+               # "ENCRYPTION_KEY": "long-random-string"
+               # }'
+
+applications:
+- name: ((app_full_name))
+  <<: *defaults
+  memory: 64M
+  instances: ((instances))
+  routes: ((routes))
+  health-check-type: http
+  health-check-http-endpoint: /healthcheck
+  env:
+    APP_DIR: /home/vcap/app
+    # NEW_RELIC_APP_NAME and NEW_RELIC_MONITOR_MODE
+    # can't be set in the PHP buildpack extension
+    NEWRELIC_HOST: gov-collector.newrelic.com
+    S3_PREFIX: datagov/dashboard/
+    DEFAULT_HOST: ((default_host))
+  processes:
+  - type: web
+    disk_quota: 512M
+    memory: ((memory_quota))
+    instances: ((instances))
+    timeout: 10

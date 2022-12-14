@@ -1,0 +1,31 @@
+# sample .env file
+# this will be overwritten by
+# docker-compose - the actual env
+# cloud-gov - bootstrap.sh based on cloud.gov env vars
+# bsp - by ansible
+DB_NAME=dashboard
+DB_USER=root
+DB_PASSWORD=mysql
+DB_HOST=database
+# DB_DEBUG:
+#   TRUE: fail on database errors on migration, display to user
+#   FALSE: continue regardless of errors
+DB_DEBUG=TRUE
+
+S3_BUCKET=bsp-ocsit-prod-east-appdata
+S3_PREFIX=datagov/dashboard/
+S3_REGION=us-gov-west-1
+
+# If the host where the app is running doesn't have IAM creds setup
+# then these values should be set explicitly
+S3_ACCESS_KEY_ID=foobar
+S3_SECRET_ACCESS_KEY=bazbat
+
+USE_LOCAL_STORAGE=true
+
+ENCRYPTION_KEY=not-secure-encryption-key
+CONTENT_PROTOCOL=http
+PROJECT_SHARED_PATH=/var/www/app
+PRE_APPROVED_ADMINS="user1,user2,admin3"
+DEFAULT_HOST=localhost:8000
+ENVIRONMENT=development

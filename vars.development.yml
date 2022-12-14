@@ -1,0 +1,13 @@
+app_name: dashboard
+# This name exists for newrelic to specify the environment in the name
+app_full_name: dashboard-dev
+
+# Number of application instances to run in cloud.gov
+instances: 1
+memory_quota: 64M
+
+# Routes to assign to this application. This must be globally unique within cloud.gov.
+routes:
+  - route: dashboard-dev-datagov.app.cloud.gov
+
+default_host: dashboard-dev-datagov.app.cloud.gov
